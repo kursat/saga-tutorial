@@ -1,5 +1,11 @@
+import Counter from './components/Counter.tsx'
+
 function App() {
-  return <div className="bg-cyan-600 text-blue-900">Clean page</div>
+  return (
+    <div>
+      <Counter />
+    </div>
+  )
 }
 
 export default App
