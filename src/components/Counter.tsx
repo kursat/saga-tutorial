@@ -1,18 +1,21 @@
-import {useState} from 'react'
-import FancyButton from './FancyButton.tsx'
-import Card from './Card.tsx'
+import FancyButton from './FancyButton'
+import Card from './Card'
+import {
+  decrement,
+  increment,
+  selectCount
+} from '../redux/features/counter/slice'
+import {useAppDispatch, useAppSelector} from '../redux/hooks'
 
 const Counter = () => {
-  const [count, setCount] = useState<number>(0)
-
-  const onClickIncrease = () => setCount(count + 1)
-  const onClickDecrease = () => setCount(count - 1)
+  const count = useAppSelector(selectCount)
+  const dispatch = useAppDispatch()
 
   return (
     <Card title={'Counter'}>
-      <FancyButton text={'Increase'} onClick={onClickIncrease} />
+      <FancyButton text={'Increase'} onClick={() => dispatch(increment())} />
       <span>{count}</span>
-      <FancyButton text={'Decrease'} onClick={onClickDecrease} />
+      <FancyButton text={'Decrease'} onClick={() => dispatch(decrement())} />
     </Card>
   )
 }
