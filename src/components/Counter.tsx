@@ -1,21 +1,37 @@
 import FancyButton from './FancyButton'
 import Card from './Card'
-import {
-  decrement,
-  increment,
-  selectCount
-} from '../redux/features/counter/slice'
+import {actions, selectors} from '../redux/features/counter/slice'
 import {useAppDispatch, useAppSelector} from '../redux/hooks'
 
 const Counter = () => {
-  const count = useAppSelector(selectCount)
+  const count = useAppSelector(selectors.selectCount)
+  const error = useAppSelector(selectors.selectError)
+  const auto = useAppSelector(s => s.counter.auto)
+
   const dispatch = useAppDispatch()
 
   return (
     <Card title={'Counter'}>
-      <FancyButton text={'Increase'} onClick={() => dispatch(increment())} />
+      <FancyButton
+        text={'Decrease by 1'}
+        onClick={() => dispatch(actions.decreaseByOne())}
+      />
       <span>{count}</span>
-      <FancyButton text={'Decrease'} onClick={() => dispatch(decrement())} />
+      <FancyButton
+        text={'Increase by 1'}
+        onClick={() => dispatch(actions.increaseByOne())}
+      />
+      <FancyButton
+        text={'Increase by random'}
+        onClick={() => dispatch(actions.increaseByRandom())}
+      />
+      <FancyButton
+        text={auto ? 'Stop auto increase' : 'Start auto increase'}
+        onClick={() => dispatch(actions.autoIncrease())}
+        disabled={auto}
+        cssWrapper={auto ? 'border-2 border-purple-900' : ''}
+      />
+      <p>{error}</p>
     </Card>
   )
 }
